@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Telecom Customer Analyser</title>
+</head>
+<body>
+	<h1>Telecom Customer Analyser</h1>
+	<form>
+
+		<label for="gender">Select Gender:</label>
+		<select name="gender" id="gender">
+			<option value=1>Male</option>
+			<option value=0>Female</option>
+		</select>
+		<br><br>
+
+		<label for="sen_citizen">Senior Citizen:</label>
+		<select name="sen_citizen" id="sen_citizen">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="partner">Partner:</label>
+		<select name="partner" id="partner">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+		
+		<label for="dependents">Dependents:</label>
+		<select name="dependents" id="dependents">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+		<br><br>
+		<br><br>
+
+		<label for="tenure">Tenure:</label>
+		<input id="tenureInput" type="range" min=0 max=120 oninput="tenure.value=tenureInput.value" />
+		<input id="tenure" type="number" value=60 min=0 max=120 oninput="tenureInput.value=tenure.value" />
+		<br><br>
+
+		<label for="phone_ser">Phone Service:</label>
+		<select name="phone_ser" id="phone_ser">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="contract">Contract:</label>
+		<select name="contract" id="contract">
+			<option value=0>Month To Month</option>
+			<option value=1>1 Year</option>
+			<option value=2>2 Years</option>
+		</select>
+		<br><br>
+
+		<label for="paperless">Paperless:</label>
+		<select name="paperless" id="paperless">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="payment_method">Payment Method:</label>
+		<select name="payment_method" id="payment_method">
+			<option value=0>Bank Transfer (Automatic)</option>
+			<option value=1>Credit Card (Automatic)</option>
+			<option value=2>Electronic Check</option>
+			<option value=3>Mail Check</option>
+		</select>
+		<br><br>
+
+		<label for="mon_charge">Monthly Charge:</label>
+		<input type="number" id="mon_charge" name="mon_charge">
+		<br><br>
+
+		<label for="tot_charge">Total Charge:</label>
+		<input type="number" id="tot_charge" name="tot_charge">
+		<br><br>
+		<br><br>
+		<br><br>
+
+		<label for="multiple_line">Multiple Lines:</label>
+		<select name="multiple_line" id="multiple_line">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="internet_ser">Internet Service:</label>
+		<select name="internet_ser" id="internet_ser">
+			<option value=0>No</option>
+			<option value=1>DSL</option>
+			<option value=2>Fibre Optic</option>
+		</select>
+		<br><br>
+
+		<label for="online_sec">Online Security:</label>
+		<select name="online_sec" id="online_sec">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="online_backup">Online Backup:</label>
+		<select name="online_backup" id="online_backup">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="device_protect">Device Protection:</label>
+		<select name="device_protect" id="device_protect">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="tech_support">Tech Support:</label>
+		<select name="tech_support" id="tech_support">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="stream_tv">Streaming TV:</label>
+		<select name="stream_tv" id="stream_tv">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<label for="stream_movie">Streaming Movies:</label>
+		<select name="stream_movie" id="stream_movie">
+			<option value=1>Yes</option>
+			<option value=0>No</option>
+		</select>
+		<br><br>
+
+		<input type="submit" value="Submit">
+		<input type="reset" value="Reset All Values">
+	</form>
+</body>
+</html>
