@@ -12,9 +12,8 @@ def telecom_result(request):
     if request.POST:
         request_dict = request.POST.dict()
 
-        gender_val = get_gender_value(request_dict)
-        if gender_val is False:
-            print('Inavlid Gender')
+        gender_val_male, gender_val_female = get_gender_value(request_dict)
+        if gender_val_male is False or gender_val_female is False:
             return HttpResponse('<h1>Invalid Gender Selection</h1>')
 
         sen_cit_val = get_sen_citizen_status(request_dict)
@@ -37,16 +36,16 @@ def telecom_result(request):
         if phn_service_val is False:
             return HttpResponse('<h1>Invalid Phone Service Status</h1>')
 
-        contract_val = get_contract_status(request_dict)
-        if contract_val is False:
+        contract_val_month, contract_one_year, contract_two_year = get_contract_status(request_dict)
+        if contract_val_month is False or contract_one_year is False or contract_two_year is False:
             return HttpResponse('<h1>Invalid Contract Value</h1>')
 
         paperless_val = get_paperless_status(request_dict)
         if paperless_val is False:
             return HttpResponse('<h1>Invalid Paperless Value</h1>')
 
-        payment_method_val = get_payment_method_status(request_dict)
-        if payment_method_val is False:
+        payment_method_val_bk, payment_method_val_cc, payment_method_val_ec, payment_method_val_mc = get_payment_method_status(request_dict)
+        if payment_method_val_bk is False or payment_method_val_cc is False or payment_method_val_ec is False or payment_method_val_mc is False:
             return HttpResponse('<h1>Invalid Payment Method Status</h1>')
 
         monthly_charge_val = get_monthly_charge_value(request_dict)
@@ -61,8 +60,8 @@ def telecom_result(request):
         if get_multiple_line_val is False:
             return HttpResponse('<h1>Invalid Multiple Line Status</h1>')
 
-        internet_service_val = get_internet_service_status(request_dict)
-        if internet_service_val is False:
+        internet_service_val_no, internet_service_val_dsl, internet_service_val_fiber = get_internet_service_status(request_dict)
+        if internet_service_val_no is False or internet_service_val_dsl is False or internet_service_val_fiber is False:
             return HttpResponse('<h1>Invalid Internet Service</h1>')
 
         online_security_val = get_online_security_status(request_dict)
@@ -89,27 +88,34 @@ def telecom_result(request):
         if stream_movie_val is False:
             return HttpResponse('<h1>Invalid Streaming Movies Status</h1>')
 
-        current_input_value_array = np.array([gender_val, sen_cit_val, partner_val, dependents_val, tenure_val,
-                                              phn_service_val, contract_val, paperless_val, payment_method_val,
-                                              monthly_charge_val, tot_charge_val, get_multiple_line_val,
-                                              internet_service_val, online_security_val, online_backup_val,
-                                              device_protect_val, tech_support_val, stream_tv_val, stream_movie_val])
+        current_input_value_array = np.array([paperless_val, dependents_val, contract_one_year, contract_two_year,
+                                              payment_method_val_ec, payment_method_val_mc, internet_service_val_fiber,
+                                              internet_service_val_no, online_security_val, online_backup_val,
+                                              tech_support_val, stream_tv_val])
 
-        print(current_input_value_array)
-
-        return HttpResponse('<h1>All Well up till now</h1>')
+        model_coef_ = np.array([0.33110004, -0.30942262, -1.23635693, -2.15960791, 0.51741586, 0.25072624, 0.69389611,
+                                -1.1915759, -0.44440307, -0.47156352, -0.58696704, 0.18726024])
+        model_intercept_ = -0.7795178
+        value = sum(current_input_value_array * model_coef_) + model_intercept_
+        churn_rate = round((1/(1+(np.exp(-value)))) * 100, 2)
+        # print('Chances of Customer Churning (Leaving) Is:', churn_rate, '%')
+        context = {'churn_rate_var': churn_rate}
+        return render(request, "Telecom/final_msg.html", context)
 
 
 def get_gender_value(request_dict):
     try:
         temp_val = int(request_dict.get('gender'))
     except:
-        return False
+        return False, False
     else:
         if temp_val not in [0, 1]:
-            return False
+            return False, False
         else:
-            return temp_val
+            if temp_val == 0:
+                return 0, 1
+            elif temp_val == 1:
+                return 1, 0
 
 
 def get_sen_citizen_status(request_dict):
@@ -176,12 +182,17 @@ def get_contract_status(request_dict):
     try:
         temp_val = int(request_dict.get('contract'))
     except:
-        return False
+        return False, False, False
     else:
         if temp_val not in [0, 1, 2]:
-            return False
+            return False, False, False
         else:
-            return temp_val
+            if temp_val == 0:
+                return 1, 0, 0
+            elif temp_val == 1:
+                return 0, 1, 0
+            elif temp_val == 2:
+                return 0, 0, 1
 
 
 def get_paperless_status(request_dict):
@@ -200,12 +211,19 @@ def get_payment_method_status(request_dict):
     try:
         temp_val = int(request_dict.get('payment_method'))
     except:
-        return False
+        return False, False, False, False
     else:
-        if temp_val not in [0, 1]:
-            return False
+        if temp_val not in [0, 1, 2, 3]:
+            return False, False, False, False
         else:
-            return temp_val
+            if temp_val == 0:
+                return 1, 0, 0, 0
+            elif temp_val == 1:
+                return 0, 1, 0, 0
+            elif temp_val == 2:
+                return 0, 0, 1, 0
+            elif temp_val == 3:
+                return 0, 0, 0, 1
 
 
 def get_monthly_charge_value(request_dict):
@@ -244,10 +262,15 @@ def get_internet_service_status(request_dict):
     except:
         return False
     else:
-        if temp_val not in [0, 1]:
+        if temp_val not in [0, 1, 2]:
             return False
         else:
-            return temp_val
+            if temp_val == 0:
+                return 1, 0, 0
+            elif temp_val == 1:
+                return 0, 1, 0
+            elif temp_val == 2:
+                return 0, 0, 1
 
 
 def get_online_security_status(request_dict):

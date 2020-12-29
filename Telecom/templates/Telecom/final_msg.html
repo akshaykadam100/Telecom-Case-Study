@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+	<style>
+
+	* {
+        box-sizing: border-box;
+        font-family: Trebuchet MS;
+        background-color: ghostwhite;
+	}
+
+    ul {
+        font-size: xx-large;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    li {
+        float: center;
+    }
+
+    li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .active {
+        background-color: #92D050;
+    }
+
+    </style>
+
+</head>
+<body>
+
+    <ul>
+        <li><a class="active" href="/">Telecom Customer Analyser</a></li>
+    </ul>
+
+    <h2>Probability of Customer Leaving Is <strong>{{  churn_rate_var  }} %</strong></h2>
+
+</body>
+</html>
