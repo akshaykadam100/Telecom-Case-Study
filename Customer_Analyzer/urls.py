@@ -15,10 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from . import views
 
 urlpatterns = [
-	url('', include('Telecom.urls')),
-    # url('', views.analyzer_homepage),
+    url('', include('Telecom.urls')),
     url('admin/', admin.site.urls),
 ]
