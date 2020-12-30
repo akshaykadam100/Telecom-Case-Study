@@ -130,6 +130,6 @@ dmypy.json
 
 # Custom Addition
 **/*.pyc
-.DS_Store
+**/.DS_Store
 **/.idea
 **/.ipynb_checkpoints
