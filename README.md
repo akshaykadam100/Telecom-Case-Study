@@ -6,7 +6,7 @@ This project is developed to predict the Customer Churning out of from a Telecom
 User can access the following link to launch Weather Analytics Dashboard
 
 ```
-http://15.206.212.33
+[Link to Web Application](http://akshaykadam100.pythonanywhere.com/)
 ```
 
 <hr>
