@@ -6,7 +6,7 @@ This project is developed to predict the Customer Churning out of from a Telecom
 User can access the following link to launch Weather Analytics Dashboard
 
 ```
-http://35.154.110.141
+http://15.206.212.33
 ```
 
 <hr>
