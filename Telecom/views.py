@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 import numpy as np
+import pandas as pd
+import os
+from sklearn import metrics
 
 
 # Create your views here.
@@ -343,3 +346,47 @@ def get_stream_movie_status(request_dict):
             return False
         else:
             return temp_val
+
+
+def model_analysis(request):
+    if request.POST:
+        y_train_pred_final = pd.read_csv(os.path.dirname(os.path.abspath(__file__)) + '\\' + 'analysis.csv')
+        conf_matrix = get_confusion_matrix(y_train_pred_final)
+        roc = get_roc_score(y_train_pred_final)
+        accuracy = get_accuracy(y_train_pred_final)
+        specificity = get_specificity(y_train_pred_final)
+        sensitivity = get_sensitivity(y_train_pred_final)
+
+        print(conf_matrix)
+        print('ROC:', roc)
+        print('Accuracy:', accuracy)
+        print('Specificity:', specificity)
+        print('Sensitivity:', sensitivity)
+
+        context = {'roc': roc, 'accuracy': accuracy, 'specificity': specificity, 'sensitivity': sensitivity,
+                   'first': conf_matrix[0, 0], 'second': conf_matrix[0, 1], 'third': conf_matrix[1, 0],
+                   'fourth': conf_matrix[1, 1], 'cutoff': 0.3}
+        return render(request, "Telecom/model_analysis.html", context)
+
+
+def get_confusion_matrix(y_train_pred_final, predicted_value=0.3):
+    return metrics.confusion_matrix(y_train_pred_final.Churn, y_train_pred_final[str(predicted_value)])
+
+
+def get_roc_score(y_train_pred_final):
+    return round(metrics.roc_auc_score(y_train_pred_final.Churn, y_train_pred_final.Churn_Prob) * 100, 2)
+
+
+def get_accuracy(y_train_pred_final, predicted_value=0.3):
+    cm1 = get_confusion_matrix(y_train_pred_final, predicted_value)
+    return round((cm1[0, 0] + cm1[1, 1]) / sum(sum(cm1)) * 100, 2)
+
+
+def get_specificity(y_train_pred_final, predicted_value=0.3):
+    cm1 = get_confusion_matrix(y_train_pred_final, predicted_value)
+    return round(cm1[0, 0] / (cm1[0, 0] + cm1[0, 1]) * 100, 2)
+
+
+def get_sensitivity(y_train_pred_final, predicted_value=0.3):
+    cm1 = get_confusion_matrix(y_train_pred_final, predicted_value)
+    return round(cm1[1, 1] / (cm1[1, 0] + cm1[1, 1]) * 100, 2)
