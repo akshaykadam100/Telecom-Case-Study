@@ -1,14 +1,6 @@
 # Telecom-Case-Study
 This project is developed to predict the Customer Churning out of from a Telecom Operator and factors impacting this process. The company uses data analytics to detect the customer who are likelt to leave network operator. This way, they will be able to analyse the customers and their reason to for leaving the network operator.
 
-## Accessing Web Application
-
-User can access the following link to launch Weather Analytics Dashboard
-
-```
-https://data-models-ml.herokuapp.com/telecom_analyser/
-```
-
 <hr>
 
 #### The company wants to know:
